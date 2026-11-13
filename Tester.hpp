@@ -7,9 +7,13 @@ class Tester : public Strategy{
 public:
     bool trahis = false;
     CD play(Strategy& p) override {
-        int size = p.listCD.size();
-        if(size == 0) return D ;
-
+        size_t size = p.listCD.size();
+        
+        if(size == 0){ 
+            trahis = false; //faut remettre à 0 entre chaque partie
+            return D ;
+        }
+        
         //joue D ? Si oui tft
         if((p.listCD.back() == D) || (trahis)){
             trahis = true;
