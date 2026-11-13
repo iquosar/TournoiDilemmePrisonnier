@@ -11,3 +11,9 @@ public:
 
     Player(Strategy strat);
 };
+
+Player::Player(Strategy strat){
+    strat = strat;
+    point = 0;
+    listCD = {};
+}
