@@ -7,4 +7,6 @@ public:
     CD play(Strategy& p) override {
         return (std::rand() % 2 == 1)? C : D;
     }; 
+    std::string name(){return "Random";};
+
 };

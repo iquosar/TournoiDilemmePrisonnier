@@ -19,7 +19,7 @@ int main(){
 
     for(Strategy* s : game.players){
         int tmp = s->point;
-        std::cout<< tmp << std::endl;
+        std::cout<< tmp << "    " << s->name()<< std::endl;
     }
     return EXIT_SUCCESS;
 }
