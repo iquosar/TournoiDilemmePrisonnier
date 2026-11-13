@@ -1,10 +1,9 @@
 #pragma once
 #include "Strategy.hpp"
 
-class TFT : Strategy{
+class TFT : public Strategy{
 public:
-    CD play(Player p) override {
-        std::vector<CD> list = p.listCD;
-        return list.empty()? C : list[list.length() - 1];
+    CD play(Strategy& p) override {
+        return p.listCD.empty()? C : p.listCD.back();
     }; 
 };

@@ -3,5 +3,5 @@
 
 class ALL_D : public Strategy{
 public:
-    CD play(Player p) override {return D;}; 
+    CD play(Strategy& p) override {return D;}; 
 };
