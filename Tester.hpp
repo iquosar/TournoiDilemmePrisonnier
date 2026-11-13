@@ -1,7 +1,6 @@
 #pragma once
 #include "Strategy.hpp"
 
-
 //D au premier tour. Si l'adversaire riposte, joue TIT-FOR-TAT ; sinon répète C, C, D
 class Tester : public Strategy{
 public:
@@ -22,4 +21,6 @@ public:
 
         return (size % 3 == 0) ? D : C;            // C C D C C D
     }
+
+    std::string name(){return "Tester";};
 }; 

@@ -16,4 +16,6 @@ public:
     CD play(Strategy& p) override {
         return p.listCD.empty()? C : choix(p.listCD.back());
     }; 
+    std::string name(){return "Joss";};
+
 };
