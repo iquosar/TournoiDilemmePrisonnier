@@ -2,12 +2,14 @@
 #include "Game.hpp"
 #include "TFT.hpp"
 #include "ALL_D.hpp"
+#include "Joss.hpp"
 
 
 int main(){
     TFT tft1 , tft2;
     ALL_D all_d; 
-    std::vector<Strategy*> joueurs = { &tft1, &tft2, &all_d };
+    JOSS jo;
+    std::vector<Strategy*> joueurs = { &tft1, &tft2, &all_d, &jo};
 
     Game game(joueurs,10);
     game.start();
