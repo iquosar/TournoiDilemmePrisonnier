@@ -9,11 +9,11 @@ public:
     //la liste DU JOUEUR et pas celle de son adversaire
     std::vector <CD> listCD;
 
-    Player(Strategy strat);
+    Player(Strategy p_strat);
 };
 
-Player::Player(Strategy strat){
-    strat = strat;
+Player::Player(Strategy p_strat){
+    strat = p_strat;
     point = 0;
     listCD = {};
 }
