@@ -1,7 +1,10 @@
 #pragma once
 #include "Strategy.hpp"
+#include <cstdlib>
 
-class RANDOM : Strategy{
+class RANDOM : public Strategy{
 public:
-    //prendre une seed pour le random
+    CD play(Strategy& p) override {
+        return (std::rand() % 2 == 1)? C : D;
+    }; 
 };
