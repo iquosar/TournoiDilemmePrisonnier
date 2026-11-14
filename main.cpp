@@ -6,6 +6,7 @@
 #include "Game.hpp"
 #include "TFT.hpp"
 #include "ALL_D.hpp"
+#include "ALL_C.hpp"
 #include "Joss.hpp"
 #include "Tester.hpp"
 #include "Random.hpp"
