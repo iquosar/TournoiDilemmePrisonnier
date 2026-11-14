@@ -3,7 +3,7 @@
 
 class ALL_D : public Strategy{
 public:
-    CD play(Strategy& p) override {return D;}; 
+    CD play(Strategy&) override {return D;}; 
     std::string name(){return "ALL_D";};
 
 };
