@@ -1,12 +1,9 @@
 #pragma once
 #include "Strategy.hpp"
 
+// joue le coup inverse de l'adversaire (et C au premier tour)
 class Inverse : public Strategy{
 public:
-    CD inverseCD(CD cd){
-        return (cd == C)? D : C;
-    }
-
     CD play(Strategy& p) override {
         return p.listCD.empty()? C : inverseCD(p.listCD.back());
     };

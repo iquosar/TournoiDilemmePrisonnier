@@ -22,8 +22,8 @@ inline score Game::partie(Strategy& a, Strategy& b) {
     //score A et score B
     int sa = 0, sb = 0;
     for (int t = 0; t < tour; t++) {
-        CD ca = a.play(b);
-        CD cb = b.play(a);
+        CD ca = a.aleaCoupInverse(a.play(b));   // Implémentation de la modification "bruit"
+        CD cb = b.aleaCoupInverse(b.play(a));   // Implémentation de la modification "bruit"
         a.listCD.push_back(ca);
         b.listCD.push_back(cb);
         score gains = reward.GAINS[ca][cb];   // la case (coup de a, coup de b)
