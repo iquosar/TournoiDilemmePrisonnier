@@ -45,6 +45,7 @@ inline void Game::start() {
             score s = partie(*players[i], *players[j]);
             players[i]->point += s.first;
             players[j]->point += s.second;
+            }
         }
     }
-}
+}    
