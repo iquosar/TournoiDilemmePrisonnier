@@ -26,11 +26,11 @@ void afficherClassement(std::vector<Strategy*> joueurs) {
 }
 
 // lance un tournoi et affiche le classement
-void lancer(const std::string& titre, std::vector<Strategy*> joueurs, Reward rew = Reward()) {
+void lancer(const std::string& titre, std::vector<Strategy*> joueurs, Reward rew = Reward(), bool randomStop = false) {
     std::srand(42);   // graine fixe pour que les résultats soit "fixe" (remise à chaque tournoi)
 
     Game game(joueurs, 200 , rew);   // 200 tours, 5 parties par duel
-    game.start();
+    game.start(randomStop);
 
     std::cout << "========================================" << std::endl;
     std::cout << titre << std::endl;
@@ -125,6 +125,24 @@ int main() {
                                    &tft2, &alld2, &joss2, &random2, &tester2,
                                    &grim1, &tf2t1, &allc1, &inverse1,
                                    &grim2, &tf2t2,  &allc2, &inverse2 }, cerf);
+    }
+
+    {
+        TFT tft1, tft2;
+        ALL_D alld1, alld2;
+        JOSS joss1, joss2;
+        RANDOM random1, random2;
+        Tester tester1, tester2;
+        RANCUNE grim1, grim2;
+        TF2T tf2t1, tf2t2;
+        ALL_C allc1, allc2;
+        Inverse inverse1, inverse2;
+        Reward cerf({4,4}, {0,3},
+                    {3,0}, {1,1});
+        lancer("ETENDU JUMEAUX TOURS_RANDOM", { &tft1, &alld1, &joss1, &random1, &tester1,
+                                   &tft2, &alld2, &joss2, &random2, &tester2,
+                                   &grim1, &tf2t1, &allc1, &inverse1,
+                                   &grim2, &tf2t2,  &allc2, &inverse2 }, Reward(), true);
     }
 
 
