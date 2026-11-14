@@ -40,9 +40,11 @@ inline void Game::start() {
     size_t n = players.size();
     for (size_t i = 0; i < n; i++) {
         for (size_t j = i + 1; j < n; j++) {
-            auto [sa, sb] = partie(*players[i], *players[j]);
-            players[i]->point += sa;
-            players[j]->point += sb;
+            //modif: c'est bien 5 parties par duo
+            for (int k = 0; k < 5; k++) { 
+            score s = partie(*players[i], *players[j]);
+            players[i]->point += s.first;
+            players[j]->point += s.second;
         }
     }
 }
