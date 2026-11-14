@@ -12,6 +12,7 @@
 #include "Random.hpp"
 #include "RANCUNE.hpp"
 #include "TF2T.hpp"
+#include "Inverse.hpp"
 
 
 
@@ -69,8 +70,10 @@ int main() {
         Tester tester1;
         RANCUNE grim;
         TF2T tf2t;
+        ALL_C allc;
+        Inverse inverse;
         lancer("ETENDU", { &tft1, &alld1, &joss1, &random1, &tester1,
-                           &grim, &tf2t });
+                           &grim, &tf2t, &allc, &inverse });
     }
 
     // étape 2 bis : nouvelles stratégies + jumeaux
@@ -82,9 +85,12 @@ int main() {
         Tester tester1, tester2;
         RANCUNE grim1, grim2;
         TF2T tf2t1, tf2t2;
+        ALL_C allc1, allc2;
+        Inverse inverse1, inverse2;
         lancer("ETENDU JUMEAUX", { &tft1, &alld1, &joss1, &random1, &tester1,
                                    &tft2, &alld2, &joss2, &random2, &tester2,
-                                   &grim1, &tf2t1, &grim2, &tf2t2 });
+                                   &grim1, &tf2t1, &allc1, &inverse1,
+                                   &grim2, &tf2t2,  &allc2, &inverse2 });
     }
 
     {
@@ -95,10 +101,12 @@ int main() {
         Tester tester1;
         RANCUNE grim;
         TF2T tf2t;
+        ALL_C allc;
+        Inverse inverse;
         Reward cerf({4,4}, {0,3},
                     {3,0}, {1,1});
         lancer("ETENDU CERF", { &tft1, &alld1, &joss1, &random1, &tester1,
-                                &grim, &tf2t }, cerf);
+                                &grim, &tf2t, &allc, &inverse }, cerf);
     }
 
     {
@@ -109,11 +117,14 @@ int main() {
         Tester tester1, tester2;
         RANCUNE grim1, grim2;
         TF2T tf2t1, tf2t2;
+        ALL_C allc1, allc2;
+        Inverse inverse1, inverse2;
         Reward cerf({4,4}, {0,3},
                     {3,0}, {1,1});
         lancer("ETENDU JUMEAUX CERF", { &tft1, &alld1, &joss1, &random1, &tester1,
                                    &tft2, &alld2, &joss2, &random2, &tester2,
-                                   &grim1, &tf2t1, &grim2, &tf2t2 }, cerf);
+                                   &grim1, &tf2t1, &allc1, &inverse1,
+                                   &grim2, &tf2t2,  &allc2, &inverse2 }, cerf);
     }
 
 
