@@ -13,6 +13,7 @@
 #include "RANCUNE.hpp"
 #include "TF2T.hpp"
 #include "Inverse.hpp"
+#include "Selection.hpp"
 
 
 
@@ -143,6 +144,49 @@ int main() {
                                    &tft2, &alld2, &joss2, &random2, &tester2,
                                    &grim1, &tf2t1, &allc1, &inverse1,
                                    &grim2, &tf2t2,  &allc2, &inverse2 }, Reward(), true);
+    }
+
+    //selection
+    {
+        TFT tft1;
+        ALL_D alld1;
+        JOSS joss1;
+        RANDOM random1;
+        Tester tester1;
+        RANCUNE grim;
+        TF2T tf2t;
+        ALL_C allc;
+        Inverse inverse;
+
+        std::cout << "========================================" << std::endl;
+        std::cout << "ETENDU SELECTION (parts en %)" << std::endl;
+        std::cout << "========================================" << std::endl;
+
+        Selection sel({ &tft1, &alld1, &joss1, &random1, &tester1, &grim, &tf2t, &allc, &inverse });
+        sel.start(1000, 50);   // 1000 générations, une ligne toutes les 50
+        std::cout << std::endl;
+    }
+
+    //sélection avec jumeaux
+    {
+        TFT tft1, tft2;
+        ALL_D alld1, alld2;
+        JOSS joss1, joss2;
+        RANDOM random1, random2;
+        Tester tester1, tester2;
+        RANCUNE grim1, grim2;
+        TF2T tf2t1, tf2t2;
+        ALL_C allc1, allc2;
+        Inverse inverse1, inverse2;
+
+        std::cout << "========================================" << std::endl;
+        std::cout << "ETENDU JUMEAUX SELECTION (parts en %)" << std::endl;
+        std::cout << "========================================" << std::endl;
+
+        Selection sel({ &tft1, &alld1, &joss1, &random1, &tester1, &grim1, &tf2t1, &allc1, &inverse1,
+                        &tft2, &alld2, &joss2, &random2, &tester2,});
+        sel.start(1000, 50);
+        std::cout << std::endl;
     }
 
 
