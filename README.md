@@ -32,7 +32,7 @@ La sélection avec jumeaux est en commentaire à la fin de `main.cpp` (18 colonn
 
 ## Stratégies
 
-`ALL_D`, `RANDOM`, `TFT`, `Tester`, `JOSS` (cours), `RANCUNE` (Grudger, Friedman), `TF2T` (Tit For Two Tats), `ALL_C` (toujours C), `Inverse` (joue l'inverse du dernier coup adverse).
+`ALL_D`, `RANDOM`, `TFT`, `Tester`, `JOSS` (cours), `RANCUNE`, `TF2T` (Tit For Two Tats), `ALL_C` (toujours C), `Inverse` (joue l'inverse du dernier coup adverse).
 
 ## Fichiers
 
