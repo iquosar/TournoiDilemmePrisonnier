@@ -10,9 +10,10 @@ public:
     std::vector<Strategy*> players;
     int tour;
     Reward reward;
+    bool bruit;
 
-    Game(std::vector<Strategy*> p_players, int p_tour = 200, Reward p_rew = Reward())
-        : players(p_players), tour(p_tour), reward(p_rew) {}
+    Game(std::vector<Strategy*> p_players, int p_tour = 200, Reward p_rew = Reward(), bool p_bruit = false)
+        : players(p_players), tour(p_tour), reward(p_rew), bruit(p_bruit) {}
 
     score partie(Strategy& a, Strategy& b);
     score partieRandomArret(Strategy& a, Strategy& b);
@@ -25,8 +26,12 @@ inline score Game::partie(Strategy& a, Strategy& b) {
     //score A et score B
     int sa = 0, sb = 0;
     for (int t = 0; t < tour; t++) {
-        CD ca = a.aleaCoupInverse(a.play(b));   // Implémentation de la modification "bruit"
-        CD cb = b.aleaCoupInverse(b.play(a));   // Implémentation de la modification "bruit"
+        CD ca = a.play(b);
+        CD cb = b.play(a);
+        if (bruit) {
+            ca = a.aleaCoupInverse(ca);   // Implémentation de la modification "bruit"
+            cb = b.aleaCoupInverse(cb);   // Implémentation de la modification "bruit"
+        }
         a.listCD.push_back(ca);
         b.listCD.push_back(cb);
         score gains = reward.GAINS[ca][cb];   // la case (coup de a, coup de b)
@@ -46,8 +51,12 @@ inline score Game::partieRandomArret(Strategy& a, Strategy& b) {
     //score A et score B
     int sa = 0, sb = 0, nb_tours = 0;
     while (std::rand() % 100 >= PROBA_ARRET_PARTIE) {
-        CD ca = a.aleaCoupInverse(a.play(b));   // Implémentation de la modification "bruit"
-        CD cb = b.aleaCoupInverse(b.play(a));   // Implémentation de la modification "bruit"
+        CD ca = a.play(b);
+        CD cb = b.play(a);
+        if (bruit) {
+            ca = a.aleaCoupInverse(ca);   // Implémentation de la modification "bruit"
+            cb = b.aleaCoupInverse(cb);   // Implémentation de la modification "bruit"
+        }
         a.listCD.push_back(ca);
         b.listCD.push_back(cb);
         score gains = reward.GAINS[ca][cb];   // la case (coup de a, coup de b)
