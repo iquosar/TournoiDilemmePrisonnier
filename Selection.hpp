@@ -55,14 +55,28 @@ public:
         for (size_t i = 0; i < n; i++) {
             for (size_t j = 0; j < n; j++)
                 if (j != i) scoreJoueur[i] += parts[j] * gains[i][j];
-
-            // Les TFT sont 40 % de la salle, donc leur score compte pour 40 % de la moyenne
+            
+            // il faut mettre ça sinon on a un problème, par exemple :
+            // A et B gagnent tous les deux 500 points par partie l'un contre l'autre,
+            // mais A représente 80 % de la pop et B 20 %.
+            // Comme on ne compte pas les rencontres contre soi-même, A ne "voit" que les 20 % de B
+            // -> score A = 0.2 * 500 = 100 alors que score B = 0.8 * 500 = 400
+            // donc B monte et A redescend jusqu'à 50/50 alors qu'ils jouent pareil.
+            // En divisant par la part des autres on remet le score à l'échelle :
+            // A = 100 / 0.2 = 500 et B = 400 / 0.8 = 500, on est donc à l'équilibre
+            scoreJoueur[i] /= (1.0 - parts[i]);
+            
+            //score moyen de toute la pop : chaque stratégie compte selon sa part
+            // avec l'exemple d'au-dessus : moyenne = 0.8 * 500 (A) + 0.2 * 500 (B) = 500
+            // A et B font pile la moyenne (500 / 500 = 1) donc leurs parts ne bougent plus
             moyenne += parts[i] * scoreJoueur[i];
         }
 
         // Les stratégies qui ont marqué plus que la moyenne "font plus d'enfants" à la génération suivante.
-        // Ex : TFT marque 1,2 fois la moyenne -> sa part est multipliée par 1,2
-        //      ALL_C marque 0,6 fois la moyenne -> sa part est multipliée par 0,6
+        // nouvelle part = ancienne part * (score / moyenne)
+        // avec l'exemple d'au-dessus : A = 0.8 * 500 / 500 = 0.8 et B = 0.2 * 500 / 500 = 0.2 -> rien ne bouge
+        // si A avait marqué 550 au lieu de 500 : moyenne = 0.8 * 550 + 0.2 * 500 = 540
+        //   -> A = 0.8 * 550 / 540 = 0.815 (grossit) et B = 0.2 * 500 / 540 = 0.185 (1.5 points en -)
         for (size_t i = 0; i < n; i++)
             parts[i] = parts[i] * scoreJoueur[i] / moyenne;
     }
@@ -78,7 +92,7 @@ public:
 //    score ALL_C = 1/3 * 600 + 1/3 * 0    = 200.0
 //    moyenne     = 1/3 * (332.7 + 467.7 + 200) = 333.4
 //
-//    nouvelle part  X    = part gen d'avant * score / moyenne 
+//    nouvelle part  X    = part gen d'avant * (score / moyenne) 
 //    nouvelle part TFT   = 33.3% * 332.7 / 333.4 = 33.26%  (stable)
 //    nouvelle part ALL_D = 33.3% * 467.7 / 333.4 = 46.75%  (grossit, il exploite ALL_C, et un peu TFT)
 //    nouvelle part ALL_C = 33.3% * 200.0 / 333.4 = 19.99%  (rétrécit, il se fait exploiter)
@@ -90,14 +104,14 @@ public:
     void afficherEntete() {
         //setw(6) pour faire des espaces
         std::cout << std::setw(6) << "gen";
-        for (Strategy* s : joueurs) std::cout << std::setw(10) << s->name();
+        for (Strategy* s : joueurs) std::cout << std::setw(8) << s->name();
         std::cout << std::endl;
     }
 
     void afficherParts(int g) {
         std::cout << std::setw(6) << g;
         for (double p : parts)
-            std::cout << std::setw(10) << std::fixed << std::setprecision(2) << p * 100;   // en %
+            std::cout << std::setw(8) << std::fixed << std::setprecision(2) << p * 100;   // en %
         std::cout << std::endl;
     }
 

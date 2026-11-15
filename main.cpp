@@ -27,10 +27,11 @@ void afficherClassement(std::vector<Strategy*> joueurs) {
 }
 
 // lance un tournoi et affiche le classement
-void lancer(const std::string& titre, std::vector<Strategy*> joueurs, Reward rew = Reward(), bool randomStop = false) {
+void lancer(const std::string& titre, std::vector<Strategy*> joueurs, Reward rew = Reward(),
+            bool randomStop = false, bool bruit = false) {
     std::srand(42);   // graine fixe pour que les résultats soit "fixe" (remise à chaque tournoi)
 
-    Game game(joueurs, 200 , rew);   // 200 tours, 5 parties par duel
+    Game game(joueurs, 200, rew, bruit);   // 200 tours, 5 parties par duel
     game.start(randomStop);
 
     std::cout << "========================================" << std::endl;
@@ -94,6 +95,7 @@ int main() {
                                    &grim2, &tf2t2,  &allc2, &inverse2 });
     }
 
+    // étape 3 : autres gains (chasse au cerf), même population qu'ETENDU
     {
         TFT tft1;
         ALL_D alld1;
@@ -110,6 +112,7 @@ int main() {
                                 &grim, &tf2t, &allc, &inverse }, cerf);
     }
 
+    // étape 3 : chasse au cerf + jumeaux
     {
         TFT tft1, tft2;
         ALL_D alld1, alld2;
@@ -128,6 +131,22 @@ int main() {
                                    &grim2, &tf2t2,  &allc2, &inverse2 }, cerf);
     }
 
+    // étape 3 : bruit, même population qu'ETENDU
+    {
+        TFT tft1;
+        ALL_D alld1;
+        JOSS joss1;
+        RANDOM random1;
+        Tester tester1;
+        RANCUNE grim;
+        TF2T tf2t;
+        ALL_C allc;
+        Inverse inverse;
+        lancer("ETENDU BRUIT", { &tft1, &alld1, &joss1, &random1, &tester1,
+                                 &grim, &tf2t, &allc, &inverse }, Reward(), false, true);
+    }
+
+    // étape 3 : bruit + jumeaux
     {
         TFT tft1, tft2;
         ALL_D alld1, alld2;
@@ -138,15 +157,30 @@ int main() {
         TF2T tf2t1, tf2t2;
         ALL_C allc1, allc2;
         Inverse inverse1, inverse2;
-        Reward cerf({4,4}, {0,3},
-                    {3,0}, {1,1});
+        lancer("ETENDU JUMEAUX BRUIT", { &tft1, &alld1, &joss1, &random1, &tester1,
+                                   &tft2, &alld2, &joss2, &random2, &tester2,
+                                   &grim1, &tf2t1, &allc1, &inverse1,
+                                   &grim2, &tf2t2,  &allc2, &inverse2 }, Reward(), false, true);
+    }
+
+    // étape 3 : horizon inconnu (1 % de chance d'arrêter la partie à chaque tour) + jumeaux
+    {
+        TFT tft1, tft2;
+        ALL_D alld1, alld2;
+        JOSS joss1, joss2;
+        RANDOM random1, random2;
+        Tester tester1, tester2;
+        RANCUNE grim1, grim2;
+        TF2T tf2t1, tf2t2;
+        ALL_C allc1, allc2;
+        Inverse inverse1, inverse2;
         lancer("ETENDU JUMEAUX TOURS_RANDOM", { &tft1, &alld1, &joss1, &random1, &tester1,
                                    &tft2, &alld2, &joss2, &random2, &tester2,
                                    &grim1, &tf2t1, &allc1, &inverse1,
                                    &grim2, &tf2t2,  &allc2, &inverse2 }, Reward(), true);
     }
 
-    //selection
+    // étape 3 : sélection, même population qu'ETENDU
     {
         TFT tft1;
         ALL_D alld1;
@@ -158,6 +192,7 @@ int main() {
         ALL_C allc;
         Inverse inverse;
 
+        std::srand(42);   // graine fixe, comme dans lancer()
         std::cout << "========================================" << std::endl;
         std::cout << "ETENDU SELECTION (parts en %)" << std::endl;
         std::cout << "========================================" << std::endl;
@@ -167,7 +202,9 @@ int main() {
         std::cout << std::endl;
     }
 
-    //sélection avec jumeaux
+    /*
+    HORRIBLE DANS LE TERMINAL, mais décommentable pour vérifier
+    // étape 3 : sélection avec jumeaux (les deux exemplaires sont additionnés à l'affichage)
     {
         TFT tft1, tft2;
         ALL_D alld1, alld2;
@@ -179,15 +216,17 @@ int main() {
         ALL_C allc1, allc2;
         Inverse inverse1, inverse2;
 
+        std::srand(42);
         std::cout << "========================================" << std::endl;
         std::cout << "ETENDU JUMEAUX SELECTION (parts en %)" << std::endl;
         std::cout << "========================================" << std::endl;
 
         Selection sel({ &tft1, &alld1, &joss1, &random1, &tester1, &grim1, &tf2t1, &allc1, &inverse1,
-                        &tft2, &alld2, &joss2, &random2, &tester2,});
+                        &tft2, &alld2, &joss2, &random2, &tester2, &grim2, &tf2t2, &allc2, &inverse2 });
         sel.start(1000, 50);
         std::cout << std::endl;
     }
+    */
 
 
     return EXIT_SUCCESS;
