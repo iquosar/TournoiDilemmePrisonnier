@@ -204,7 +204,7 @@ int main() {
 
     /*
     HORRIBLE DANS LE TERMINAL, mais décommentable pour vérifier
-    // étape 3 : sélection avec jumeaux (les deux exemplaires sont additionnés à l'affichage)
+    // étape 3 : sélection avec jumeaux (les deux exemplaires NE sont PAS additionnés à l'affichage)
     {
         TFT tft1, tft2;
         ALL_D alld1, alld2;
