@@ -24,21 +24,20 @@ Tous les tournois s'exécutent à la suite, chacun dans une section séparée pa
 | `BASE`, `JUMEAUX` | 1 | les 5 stratégies du cours |
 | `ETENDU`, `ETENDU JUMEAUX` | 2 | + Rancune, TF2T, ALL_C, Inverse |
 | `ETENDU CERF`, `ETENDU JUMEAUX CERF` | 3 | matrice de la chasse au cerf (4,4 / 0,3 / 3,0 / 1,1) |
-| `... TOURS_RANDOM` | 3 | horizon inconnu : 1 % de chance d'arrêter la partie à chaque tour |
-| `... SELECTION` | 3 | sélection : la part de chaque stratégie évolue selon son score (1000 générations) |
+| `ETENDU BRUIT`, `ETENDU JUMEAUX BRUIT` | 3 | bruit : chaque coup est inversé avec 5 % de chance (`PROBA_INVERSE` dans `Strategy.hpp`) |
+| `ETENDU JUMEAUX TOURS_RANDOM` | 3 | horizon inconnu : 1 % de chance d'arrêter la partie à chaque tour, soit environ 100 tours en moyenne (`PROBA_ARRET_PARTIE` dans `Game.hpp`) |
+| `ETENDU SELECTION` | 3 | sélection : la part de chaque stratégie évolue selon son score (1000 générations) |
 
-Bruit : chaque coup peut être inversé avec une probabilité `PROBA_INVERSE` (5 %, dans `Strategy.hpp`).
+La sélection avec jumeaux est en commentaire à la fin de `main.cpp` (18 colonnes, trop large pour un terminal) : il suffit de la décommenter pour la relancer.
 
 ## Stratégies
 
-`ALL_D`, `RANDOM`, `TFT`, `Tester`, `JOSS` (cours) , `RANCUNE` , `TF2T` (Tit For Two Tats) , `ALL_C` (toujours C) , `Inverse` (joue l'inverse du dernier coup adverse).
+`ALL_D`, `RANDOM`, `TFT`, `Tester`, `JOSS` (cours), `RANCUNE` (Grudger, Friedman), `TF2T` (Tit For Two Tats), `ALL_C` (toujours C), `Inverse` (joue l'inverse du dernier coup adverse).
 
 ## Fichiers
 
 - `main.cpp` : lance tous les tournois
-- `Game.hpp` : moteur (partie, tournoi tous contre tous)
+- `Game.hpp` : moteur (partie, tournoi tous contre tous, bruit, horizon inconnu)
 - `Selection.hpp` : modification « sélection »
 - `Reward.hpp` : matrice de gains
 - `Strategy.hpp` : classe de base ; une stratégie par fichier `.hpp`
-
-Journal de bord : `journal.md`.
